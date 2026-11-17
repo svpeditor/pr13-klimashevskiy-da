@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 
 public class BookingService {
     public static final Duration MIN_DURATION = Duration.ofMinutes(15);
-    public static final Duration MAX_DURATION = Duration.ofHours(8);
+    // вариант 4: максимальная длительность 8 часов + 25 % = 10 часов
+    public static final int BASE_MAX_HOURS = 8;
+    public static final int MAX_MODIFIER_PERCENT = 25;
+    public static final Duration MAX_DURATION = Duration.ofMinutes(BASE_MAX_HOURS * 60 * (100 + MAX_MODIFIER_PERCENT) / 100);
 
     private final BookingRepository repo;
     // промежуток, который должен оставаться между бронированиями одной комнаты

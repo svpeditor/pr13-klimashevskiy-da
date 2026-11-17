@@ -20,6 +20,7 @@ public class SelfCheck {
         checkBook();
         checkMidnight();
         checkBuffer();
+        checkVariant();
         System.out.println("Unit: " + passed + "/" + count + " passed");
         // свой файл и свое "сейчас": java -cp out ru.edu.pr10.SelfCheck data/my.csv 2026-10-01T08:00
         LocalDateTime now = args.length > 1 ? LocalDateTime.parse(args[1]) : NOW;
@@ -91,6 +92,16 @@ public class SelfCheck {
         check("buffer 15 min gap", s.isAvailable("R1", t(11, 15), t(12, 0)));
         check("buffer before", s.isAvailable("R1", t(9, 0), t(9, 45)) && !s.isAvailable("R1", t(9, 0), t(9, 46)));
         check("negative buffer", !tryBuffer(Duration.ofMinutes(-5)));
+    }
+
+    private static void checkVariant() {
+        // вариант 4: до 10 часов (было 8)
+        check("variant max 600 min", BookingService.MAX_DURATION.toMinutes() == 600);
+        check("variant 8h01", tryBook("R1", t(9, 0), t(17, 1)));
+        check("variant 10h", tryBook("R1", t(9, 0), t(19, 0)));
+        check("variant 10h01", !tryBook("R1", t(9, 0), t(19, 1)));
+        check("variant night 10h", tryBook("R1", t(21, 0), t(7, 0).plusDays(1)));
+        check("variant min unchanged", BookingService.MIN_DURATION.toMinutes() == 15);
     }
 
     // ---------- вспомогательные методы ----------
