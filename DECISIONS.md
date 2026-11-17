@@ -87,8 +87,8 @@ isAvailable пользуются одной и той же формулой. О�
 ### Как Activity-диаграмма отражает участок кода
 
 Блок A1 "Проверить границы времени" - вызов checkInterval(start, end) и проверка start.isBefore(now) в book.
-Ветка "нет" ромба "Интервал корректен" - IllegalArgumentException. "Найти существующие бронирования комнаты"
-- repo.findByRoom(room), "Проверить пересечение с каждым интервалом" - цикл for с overlaps(b, start, end).
+Ветка "нет" ромба "Интервал корректен" - IllegalArgumentException. "Найти существующие бронирования комнаты" -
+repo.findByRoom(room), "Проверить пересечение с каждым интервалом" - цикл for с overlaps(b, start, end).
 Ветка "да" ромба "Есть конфликт" - throw new BookingConflictException(b.id(), ...), ветка "нет" - new Booking
 и repo.save.
 
